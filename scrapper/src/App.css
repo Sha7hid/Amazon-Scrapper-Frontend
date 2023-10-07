@@ -1,38 +1,66 @@
+/* App.css */
+
+/* Styling for the main container */
+body{
+  background-color: aquamarine;
+}
 .App {
   text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Styling for user information */
+.user-info {
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Styling for forms */
+.form-group {
+  margin-bottom: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Styling for buttons */
+button {
+  padding: 10px 20px;
+  background-color: #ff0c0c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 10%;
+}
+.button{
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 10%;
 }
 
-.App-link {
-  color: #61dafb;
+/* Styling for product links */
+.product-links {
+  margin-top: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Styling for product link list */
+.product-link-list {
+  list-style: none;
+  padding: 0;
 }
+
+/* Styling for individual product links */
+.product-link {
+  margin-bottom: 10px;
+}
+
+/* Styling for user image */
+.user-image {
+  max-width: 100px;
+  border-radius: 50%;
+}
+.success{
+  color: blue;
+}
+
+
