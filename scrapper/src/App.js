@@ -10,9 +10,12 @@ function App() {
   const [productLinks, setProductLinks] = useState([]);
   const [link, setLink] = useState(false);
   const [schedule, setSchedule] = useState(false);
+  const [userschedule, setUserschedule] = useState(null);
+  const [change, setChange] = useState(false);
   const [profile, setProfile] = useState(null);
   const [userExists, setUserExists] = useState(false);
-  const [selectedScheduleOption, setSelectedScheduleOption] = useState(null); // Default to 2 minutes
+  const [selectedScheduleOption, setSelectedScheduleOption] = useState(null);
+  const [changedScheduleOption, setChangedSelectedScheduleOption] = useState(null);
   const [url1, setUrl1] = useState("");
   const [url2, setUrl2] = useState("");
   const [url3, setUrl3] = useState("");
@@ -53,6 +56,7 @@ function App() {
 
       // Handle the response as needed
       console.log("User data stored in MongoDB:", response.data);
+      setUserschedule(response.data.schedule);
     } catch (error) {
       console.error("Error logging in with Google:", error);
       // Handle login error or display an error message
@@ -107,23 +111,24 @@ function App() {
     }
   };
   const sendEmailToUser = async (
+    googleId,
     name,
     email,
-    productLinks,
-    userOption
+    productLinks
   ) => {
+    const userOption = googleId; 
     console.log('Data being sent:', {
+      userOption,
       name,
       email,
-      productLinks,
-      userOption,
+      productLinks
     });
     try {
       const response = await axios.post("http://localhost:443/schedule-email", {
         name,
         email,
         productLinks,
-        userOption,
+        userOption
       });
 
       // Handle the response as needed
@@ -140,17 +145,17 @@ function App() {
     try {
       if (
         user &&
+        user.sub,
         user.name &&
         user.email &&
         productLinks &&
-        productLinks.length > 0 &&
-        selectedScheduleOption
+        productLinks.length > 0 
       ) {
         await sendEmailToUser(
+          user.sub,
           user.name,
           user.email,
-          productLinks,
-          selectedScheduleOption
+          productLinks
         );
         console.log("Email sent successfully");
       }
@@ -158,8 +163,45 @@ function App() {
       console.error("Error sending email:", error);
     }
   };
+  const sendChangedSchedule = async (
+   googleId,
+   schedule
+  ) => {
+    console.log('Data being sent:', {
+     schedule
+    });
+    try {
+      const response = await axios.put(`http://localhost:443/api/user/google/${googleId}`, {
+      schedule,
+      });
+      // Handle the response as needed
+      console.log("Schedule send:", response.data);
+      setChange(true)
+    } catch (error) {
+      console.error("Error sending schedule:", error);
+      // Handle error or display an error message
+    }
+  };
 
-  console.log(selectedScheduleOption);
+  const changeSchedule = async (e) => {
+    e.preventDefault()
+    try {
+      if (
+        user &&
+        user.sub &&
+        changedScheduleOption
+      ) {
+        await sendChangedSchedule(
+        user.sub,
+        changedScheduleOption
+        );
+        console.log("Schedule changed successfully");
+      }
+    } catch (error) {
+      console.error("Error sending changing schedule:", error);
+    }
+  };
+
   return (
     <div className="App">
       <h2>Amazon Scrapper Tool</h2>
@@ -178,6 +220,7 @@ function App() {
                 <h3>User Logged in</h3>
                 <p>Name: {profile.name}</p>
                 <p>Email Address: {profile.email}</p>
+                <p>Current User Schedule: {userschedule}</p>
                 <br />
                 <br />
               </div>
@@ -216,13 +259,15 @@ function App() {
             {link? <p className="success">Submitted Successfully!! Refresh to see the updated Product Links history</p>:<p></p>}
           </form>
           <br />
-          <form onSubmit={sendEmail}>
-            {/* Use the outer form for email send action */}
+          <br />
+          {/* change schedule */}
+          <form onSubmit={changeSchedule}>
+            <h3>Add or change existing schedule</h3>
             <div className="form-group">
-              <label>Schedule Option:</label>
+              <label>Select Schedule Option:</label>
               <select
-                value={selectedScheduleOption}
-                onChange={(e) => setSelectedScheduleOption(e.target.value)}
+                value={changedScheduleOption}
+                onChange={(e) => setChangedSelectedScheduleOption(e.target.value)}
               >
                 <option value="">Select a schedule option</option>
                 <option value="2 minutes">2 minutes</option>
@@ -232,10 +277,20 @@ function App() {
                 <option value="3 months">3 months</option>
               </select>
             </div>
-            <button className="button" type="submit">Confirm Schedule</button>
-            {schedule? <p className="success">Scheduled Email Successfully!! Check your inbox on time📧</p>:<p></p>}
+            <button className="button" type="submit">Set Schedule</button>
+            {change? <p className="success">Scheduled Successfully! Confirm to start the schedule</p>:<p></p>}
           </form>
           <br />
+          <form onSubmit={sendEmail}>
+  <button className="button" type="submit">Confirm Schedule</button>
+  {schedule? <p className="success">Scheduled Email Successfully!! Check your inbox on time📧</p>:<p></p>}
+</form>
+<br />
+          <form onSubmit={sendEmail}>
+            <h3>If you added new product links after scheduling then reshedule to get those links too</h3>
+  <button className="button" type="submit">ReSchedule</button>
+  {schedule? <p className="success">ReScheduled Email Successfully!! Check your inbox on time📧</p>:<p></p>}
+</form>
           <LogoutButton />
         </div>
       ) : (
