@@ -26,7 +26,7 @@ export default function ScrapHistory() {
   }, [user]);
 
   const checkUserExists = (googleId) => {
-    const apiEndpoint = `http://localhost:443/api/user/google/${googleId}`;
+    const apiEndpoint = `https://scrapper-backend-k0dl.onrender.com/api/user/google/${googleId}`;
 
     axios
       .get(apiEndpoint)
@@ -41,7 +41,7 @@ export default function ScrapHistory() {
     try {
       console.log(user.name);
       // After successful login, create or retrieve the user in your MongoDB collection
-      const response = await axios.post("http://localhost:443/api/user", {
+      const response = await axios.post("https://scrapper-backend-k0dl.onrender.com/api/user", {
         googleId: user.sub, // User's Google ID
         displayName: user.name, // User's name
         email: user.email, // User's email
@@ -57,7 +57,7 @@ export default function ScrapHistory() {
   // Function to fetch user-related product links by Google ID
   const fetchUserProductLinks = async () => {
     if (profile) {
-      const apiEndpoint = `http://localhost:443/api/productlink/user/${profile.sub}`;
+      const apiEndpoint = `https://scrapper-backend-k0dl.onrender.com/api/productlink/user/${profile.sub}`;
 
       try {
         const response = await axios.get(apiEndpoint);
@@ -77,7 +77,7 @@ export default function ScrapHistory() {
     const scrapedDataArray = [];
 
     for (const data of productLinks) {
-      const apiEndpoint = `http://localhost:443/api/scrap/productlink/${data._id}`;
+      const apiEndpoint = `https://scrapper-backend-k0dl.onrender.com/api/scrap/productlink/${data._id}`;
 
       try {
         const response = await axios.get(apiEndpoint);

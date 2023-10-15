@@ -40,7 +40,7 @@ function Scrapper() {
   }, [user]);
 
   const checkUserExists = (googleId) => {
-    const apiEndpoint = `http://localhost:443/api/user/google/${googleId}`;
+    const apiEndpoint = `https://scrapper-backend-k0dl.onrender.com/api/user/google/${googleId}`;
 
     axios
       .get(apiEndpoint)
@@ -55,7 +55,7 @@ function Scrapper() {
     try {
       console.log(user.name);
       // After successful login, create or retrieve the user in your MongoDB collection
-      const response = await axios.post("http://localhost:443/api/user", {
+      const response = await axios.post("https://scrapper-backend-k0dl.onrender.com/api/user", {
         googleId: user.sub, // User's Google ID
         displayName: user.name, // User's name
         email: user.email, // User's email
@@ -72,7 +72,7 @@ function Scrapper() {
   // Function to fetch user-related product links by Google ID
   const fetchUserProductLinks = async () => {
     if (profile) {
-      const apiEndpoint = `http://localhost:443/api/productlink/user/${profile.sub}`;
+      const apiEndpoint = `https://scrapper-backend-k0dl.onrender.com/api/productlink/user/${profile.sub}`;
 
       try {
         const response = await axios.get(apiEndpoint);
@@ -112,7 +112,7 @@ function Scrapper() {
 
     try {
       const response = await axios.post(
-        "http://localhost:443/api/productlink",
+        "https://scrapper-backend-k0dl.onrender.com/api/productlink",
         postData
       );
       console.log("Data posted successfully:", response.data);
@@ -132,7 +132,7 @@ function Scrapper() {
       productLinks,
     });
     try {
-      const response = await axios.post("http://localhost:443/api/schedule", {
+      const response = await axios.post("https://scrapper-backend-k0dl.onrender.com/api/schedule", {
         name,
         email,
         productLinks,
@@ -170,7 +170,7 @@ function Scrapper() {
     });
     try {
       const response = await axios.put(
-        `http://localhost:443/api/user/google/${googleId}`,
+        `https://scrapper-backend-k0dl.onrender.com/api/user/google/${googleId}`,
         {
           schedule,
         }
@@ -213,7 +213,7 @@ function Scrapper() {
           try {
             // Here, create a ScrapData entry using a POST request
             const response = await axios.post(
-              "http://localhost:443/api/scrap",
+              "https://scrapper-backend-k0dl.onrender.com/api/scrap",
               {
                 name: data.productName,
                 reviewCount: data.reviewCount,

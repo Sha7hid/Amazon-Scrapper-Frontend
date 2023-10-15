@@ -40,7 +40,7 @@ function Home() {
   }, [user]);
 
   const checkUserExists = (googleId) => {
-    const apiEndpoint = `http://localhost:443/api/user/google/${googleId}`;
+    const apiEndpoint = `https://scrapper-backend-k0dl.onrender.com/api/user/google/${googleId}`;
 
     axios
       .get(apiEndpoint)
@@ -55,7 +55,7 @@ function Home() {
     try {
       console.log(user.name);
       // After successful login, create or retrieve the user in your MongoDB collection
-      const response = await axios.post("http://localhost:443/api/user", {
+      const response = await axios.post("https://scrapper-backend-k0dl.onrender.com/api/user", {
         googleId: user.sub, // User's Google ID
         displayName: user.name, // User's name
         email: user.email, // User's email
@@ -77,7 +77,7 @@ function Home() {
     });
     try {
       const response = await axios.put(
-        `http://localhost:443/api/user/google/${googleId}`,
+        `https://scrapper-backend-k0dl.onrender.com/api/user/google/${googleId}`,
         {
           schedule,
         }
@@ -115,7 +115,7 @@ function Home() {
   
     // Send the email data to the route using Axios or fetch
     try {
-      const response = await axios.put(`http://localhost:443/api/user/google/${user.sub}`, {
+      const response = await axios.put(`https://scrapper-backend-k0dl.onrender.com/api/user/google/${user.sub}`, {
         ...emailData, // Include the email data from the state
       });
   console.log(emailData)
@@ -135,7 +135,6 @@ function Home() {
   reverseOrder={false}/>
             <Navigation />
       <div  className="flex flex-col justify-center items-center h-screen bg-sky-900 p-4 text-white">
-        <h2 className="text-3xl font-sans font-bold mb-4">User Account</h2>
         <br />
         <br />
         {isAuthenticated ? (
