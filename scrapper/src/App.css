@@ -2,7 +2,8 @@
 
 /* Styling for the main container */
 body{
-  background-color: aquamarine;
+  --tw-bg-opacity: 1;
+  background-color: rgb(12 74 110 / var(--tw-bg-opacity));
 }
 .App {
   text-align: center;
@@ -48,6 +49,13 @@ button {
   list-style: none;
   padding: 0;
 }
+.homeList{
+  list-style: none;
+  padding: 0;
+  color: #002375;
+  font-weight: bold;
+  font-size: 18px;
+}
 
 /* Styling for individual product links */
 .product-link {
@@ -62,5 +70,28 @@ button {
 .success{
   color: blue;
 }
-
-
+.Review{
+  color: #ff0c0c;
+  font-size: medium;
+  font-weight: bold;
+}
+.url{
+  color: #0060c7;
+  font-size: medium;
+  font-weight: bold;
+}
+.rating{
+  color: #00960f;
+  font-size: medium;
+  font-weight: bold;
+}
+.history{
+  color: #0060c7;
+  font-size: medium;
+  font-weight: bold;
+}
+.date{
+  color: #ff0000;
+  font-size: medium;
+  font-weight: bold;
+}
