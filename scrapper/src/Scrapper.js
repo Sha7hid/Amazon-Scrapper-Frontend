@@ -199,7 +199,7 @@ function Scrapper() {
     console.log(urls);
     try {
       const toastId = toast.loading('Scrapping in progress...');
-      const response = await axios.post("http://localhost:5000/review-count", {
+      const response = await axios.post("https://scrapper-hori.onrender.com/review-count", {
         urls,
       });
    
